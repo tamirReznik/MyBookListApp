@@ -1,4 +1,5 @@
 package com.projects.mybooklist.adapters;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -13,12 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.projects.mybooklist.R;
 import com.projects.mybooklist.entities.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +111,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return books.size();
     }
 
-//    update books that matches the search input
+    //    update books that matches the search input
     public void filteredList(ArrayList<Book> filteredList, String text) {
         books = new ArrayList<>(filteredList);
         this.highlightText = text;
@@ -144,6 +148,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         }
     }
 
+    //    creating an callback for implements Toast pop up when clicking on a book
     public interface OnItemClickListener {
         void onItemClick(int position);
     }

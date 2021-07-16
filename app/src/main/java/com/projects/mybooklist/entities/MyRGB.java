@@ -1,16 +1,16 @@
 package com.projects.mybooklist.entities;
 
-public class myRGB {
+public class MyRGB {
 
     private int red;
     private int green;
     private int blue;
 
 
-    public myRGB() {
+    public MyRGB() {
     }
 
-    public myRGB(int red, int green, int blue) {
+    public MyRGB(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;

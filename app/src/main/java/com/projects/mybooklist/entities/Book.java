@@ -5,13 +5,13 @@ public class Book {
     private String title;
     private String body;
     private float rating;
-    private myRGB placeholderColor;
+    private MyRGB placeholderColor;
     private String url;
 
     public Book() {
     }
 
-    public Book(String title, String body, float rating, myRGB placeholderColor, String url) {
+    public Book(String title, String body, float rating, MyRGB placeholderColor, String url) {
         this.title = title;
         this.body = body;
         this.rating = rating;
@@ -43,11 +43,11 @@ public class Book {
         this.rating = rating;
     }
 
-    public myRGB getPlaceholderColor() {
+    public MyRGB getPlaceholderColor() {
         return placeholderColor;
     }
 
-    public void setPlaceholderColor(myRGB placeholderColor) {
+    public void setPlaceholderColor(MyRGB placeholderColor) {
         this.placeholderColor = placeholderColor;
     }
 
