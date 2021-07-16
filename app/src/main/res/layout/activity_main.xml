@@ -10,10 +10,21 @@
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_weight="0.05"
-        android:background="#ECBD5F"
         android:gravity="center_vertical">
+
+        <FrameLayout
+            android:id="@+id/main_LAY_top"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/gold_bg"/>
+        <FrameLayout
+            android:id="@+id/main_LAY_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/main_LAY_top"
+            android:background="@color/gray_bg"/>
 
         <TextView
             android:id="@+id/main_LBL_books"
@@ -21,9 +32,12 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:paddingTop="20dp"
+            android:layout_marginBottom="25dp"
             android:text="@string/books"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/main_LAY_search"

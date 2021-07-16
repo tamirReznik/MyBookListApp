@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 filteredList.add(book);
             }
         }
-        booksAdapter.filteredList(filteredList);
+        booksAdapter.filteredList(filteredList,text);
     }
 
     public ArrayList<Book> readBooksFromJson() {

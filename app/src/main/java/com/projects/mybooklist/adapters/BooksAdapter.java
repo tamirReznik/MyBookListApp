@@ -3,6 +3,7 @@ package com.projects.mybooklist.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.projects.mybooklist.R;
 import com.projects.mybooklist.entities.Book;
@@ -25,12 +25,13 @@ import java.util.List;
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
     Context context;
     List<Book> books;
-    List<Book> allBooks;
+    //    List<Book> allBooks;
     OnItemClickListener onItemClickListener;
+    private String highlightText;
 
     public BooksAdapter(Context context, List<Book> books) {
         this.books = books;
-        this.allBooks = new ArrayList<>(books);
+//        this.allBooks = new ArrayList<>(books);
         this.context = context;
     }
 
@@ -47,9 +48,20 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     public void onBindViewHolder(@NonNull BooksAdapter.BookViewHolder holder, int position) {
         Book book = books.get(position);
         Log.i("chatLog", "onBindViewHolder: " + book.toString());
-        holder.book_LBL_name.setText(book.getTitle());
-        holder.book_LBL_author.setText(book.getBody());
-        ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(book.getPlaceholderColor().getRed(), book.getPlaceholderColor().getGreen(), book.getPlaceholderColor().getBlue()));
+        String title = book.getTitle();
+        String body = book.getBody();
+        if (highlightText != null && !highlightText.isEmpty()) {
+            title = book.getTitle().replaceAll("(?i)"+highlightText, "<font color='yellow'>" + highlightText + "</font>");
+            body = book.getBody().replaceAll("(?i)"+highlightText, "<font color='yellow'>" + highlightText + "</font>");
+        }
+        holder.book_LBL_name.setText(Html.fromHtml(title));
+        holder.book_LBL_author.setText(Html.fromHtml(body));
+
+        ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(
+                book.getPlaceholderColor().getRed(),
+                book.getPlaceholderColor().getGreen(),
+                book.getPlaceholderColor().getBlue())
+        );
 
         holder.book_RTB_rank.setRating(book.getRating());
         Glide.with(holder.itemView.getContext())
@@ -66,9 +78,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return books.size();
     }
 
-    public void filteredList(ArrayList<Book> filteredList) {
-
+    public void filteredList(ArrayList<Book> filteredList, String text) {
         books = new ArrayList<>(filteredList);
+        this.highlightText = text;
         notifyDataSetChanged();
     }
 

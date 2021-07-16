@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0.5dp">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3BA1AFBA"
+        android:background="@color/gray_bg"
         android:padding="12dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/book_IMG_profile"
             android:layout_width="52dp"
             android:layout_height="80dp"
-            android:background="#FFF000"
             android:src="@drawable/ic_launcher_foreground" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/book_IMG_profile"
             android:text="@string/book_title"
-            android:textColor="#92000000"
+            android:textColor="@color/black_title"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -52,7 +52,6 @@
             android:numStars="5"
             android:progressTint="@color/gold"
             android:rating="4.3" />
-
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
