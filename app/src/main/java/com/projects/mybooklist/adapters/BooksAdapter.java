@@ -1,5 +1,4 @@
 package com.projects.mybooklist.adapters;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -9,34 +8,28 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.projects.mybooklist.R;
 import com.projects.mybooklist.entities.Book;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
     Context context;
     List<Book> books;
-    //    List<Book> allBooks;
     OnItemClickListener onItemClickListener;
     private String highlightText;
 
     public BooksAdapter(Context context, List<Book> books) {
         this.books = books;
-//        this.allBooks = new ArrayList<>(books);
         this.context = context;
     }
 
@@ -52,9 +45,39 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     @Override
     public void onBindViewHolder(@NonNull BooksAdapter.BookViewHolder holder, int position) {
         Book book = books.get(position);
-        Log.i("chatLog", "onBindViewHolder: " + book.toString());
+
+        setHighlightSearchedText(holder, book);
+
+//      creating The Placeholder from the given rgb
+        ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(
+                book.getPlaceholderColor().getRed(),
+                book.getPlaceholderColor().getGreen(),
+                book.getPlaceholderColor().getBlue())
+        );
+
+//        loading image via glide -> The RGB background will be displayed until the image is fully loaded
+        holder.book_RTB_rank.setRating(book.getRating());
+        Glide.with(holder.itemView.getContext())
+                .load(book.getUrl())
+                .centerCrop()
+                .placeholder(imgPlaceHolder)
+                .into(holder.book_IMG_profile);
+
+    }
+
+    //generate highlighted text
+    private Spannable generateSpannable(String text, int start, int end) {
+        Spannable spannable = new SpannableString(text);
+        ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{}}, new int[]{Color.BLUE});
+        TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(null, Typeface.BOLD, -1, colorStateList, null);
+        spannable.setSpan(textAppearanceSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
+    private void setHighlightSearchedText(@NonNull BooksAdapter.BookViewHolder holder, Book book) {
         String title = book.getTitle();
         String body = book.getBody();
+
         if (highlightText != null && !highlightText.isEmpty()) {
 
             int titleStartPos = title.toLowerCase().indexOf(highlightText.toLowerCase());
@@ -77,30 +100,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             holder.book_LBL_name.setText(title);
             holder.book_LBL_author.setText(body);
         }
-
-
-        ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(
-                book.getPlaceholderColor().getRed(),
-                book.getPlaceholderColor().getGreen(),
-                book.getPlaceholderColor().getBlue())
-        );
-
-        holder.book_RTB_rank.setRating(book.getRating());
-        Glide.with(holder.itemView.getContext())
-                .load(book.getUrl())
-                .centerCrop()
-                .placeholder(imgPlaceHolder)
-                .into(holder.book_IMG_profile);
-
-
-    }
-
-    private Spannable generateSpannable(String text, int start, int end) {
-        Spannable spannable = new SpannableString(text);
-        ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{}}, new int[]{Color.BLUE});
-        TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(null, Typeface.BOLD, -1, colorStateList, null);
-        spannable.setSpan(textAppearanceSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannable;
     }
 
     @Override
@@ -108,6 +107,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return books.size();
     }
 
+//    update books that matches the search input
     public void filteredList(ArrayList<Book> filteredList, String text) {
         books = new ArrayList<>(filteredList);
         this.highlightText = text;
@@ -128,6 +128,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             book_LBL_author = itemView.findViewById(R.id.book_LBL_author);
             book_RTB_rank = itemView.findViewById(R.id.book_RTB_rank);
             book_IMG_profile = itemView.findViewById(R.id.book_IMG_profile);
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

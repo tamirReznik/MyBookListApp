@@ -5,11 +5,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.projects.mybooklist.R;
@@ -17,7 +15,6 @@ import com.projects.mybooklist.adapters.BooksAdapter;
 import com.projects.mybooklist.entities.Book;
 import com.projects.mybooklist.entities.BooksData;
 import com.projects.mybooklist.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecycleView() {
-        recyclerView = findViewById(R.id.books_REC_card);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         books = new ArrayList<>();
@@ -66,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         main_EDT_search = findViewById(R.id.main_EDT_search);
-
+        recyclerView = findViewById(R.id.books_REC_card);
     }
 
+//    set listener on search bar - filter result in real-time
     private void initSearchFilter() {
         main_EDT_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Creating ArrayList of books according to matches titles and bodies of the books
     private void filter(String text) {
         ArrayList<Book> filteredList = new ArrayList<>();
 
@@ -97,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 filteredList.add(book);
             }
         }
-        booksAdapter.filteredList(filteredList,text);
+        booksAdapter.filteredList(filteredList, text);
     }
 
+    //  Read and parse the json file into to ArrayList of books
     public ArrayList<Book> readBooksFromJson() {
 
         String json = Objects.requireNonNull(Utils.loadJSONFromAsset(this, "books (1).json"));
