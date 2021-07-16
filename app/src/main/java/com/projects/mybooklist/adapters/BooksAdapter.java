@@ -1,6 +1,8 @@
 package com.projects.mybooklist.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.projects.mybooklist.R;
 import com.projects.mybooklist.entities.Book;
@@ -32,7 +35,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     }
 
 
-
     @NonNull
     @Override
     public BooksAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,10 +49,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         Log.i("chatLog", "onBindViewHolder: " + book.toString());
         holder.book_LBL_name.setText(book.getTitle());
         holder.book_LBL_author.setText(book.getBody());
+        ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(book.getPlaceholderColor().getRed(), book.getPlaceholderColor().getGreen(), book.getPlaceholderColor().getBlue()));
+
         holder.book_RTB_rank.setRating(book.getRating());
         Glide.with(holder.itemView.getContext())
                 .load(book.getUrl())
                 .centerCrop()
+                .placeholder(imgPlaceHolder)
                 .into(holder.book_IMG_profile);
 
 

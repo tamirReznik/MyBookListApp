@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         initRecycleView();
 
-
     }
 
     private void initRecycleView() {
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         books = new ArrayList<>();
 
         books = readBooksFromJson();
-
 
         booksAdapter = new BooksAdapter(this, books);
         recyclerView.setAdapter(booksAdapter);
