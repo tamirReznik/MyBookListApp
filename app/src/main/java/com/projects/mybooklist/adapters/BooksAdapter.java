@@ -1,9 +1,14 @@
 package com.projects.mybooklist.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,11 +56,28 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         String title = book.getTitle();
         String body = book.getBody();
         if (highlightText != null && !highlightText.isEmpty()) {
-            title = book.getTitle().replaceAll("(?i)"+highlightText, "<font color='yellow'>" + highlightText + "</font>");
-            body = book.getBody().replaceAll("(?i)"+highlightText, "<font color='yellow'>" + highlightText + "</font>");
+
+            int titleStartPos = title.toLowerCase().indexOf(highlightText.toLowerCase());
+            int titleEndPos = titleStartPos + highlightText.length();
+            int bodyStartPos = body.toLowerCase().indexOf(highlightText.toLowerCase());
+            int bodyEndPos = bodyStartPos + highlightText.length();
+
+            if (titleStartPos != -1)
+                holder.book_LBL_name.setText(generateSpannable(title, titleStartPos, titleEndPos));
+            else
+                holder.book_LBL_name.setText(title);
+
+            if (bodyStartPos != -1)
+                holder.book_LBL_author.setText(generateSpannable(body, bodyStartPos, bodyEndPos));
+            else
+                holder.book_LBL_author.setText(body);
+
+
+        } else {
+            holder.book_LBL_name.setText(title);
+            holder.book_LBL_author.setText(body);
         }
-        holder.book_LBL_name.setText(Html.fromHtml(title));
-        holder.book_LBL_author.setText(Html.fromHtml(body));
+
 
         ColorDrawable imgPlaceHolder = new ColorDrawable(Color.rgb(
                 book.getPlaceholderColor().getRed(),
@@ -71,6 +93,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 .into(holder.book_IMG_profile);
 
 
+    }
+
+    private Spannable generateSpannable(String text, int start, int end) {
+        Spannable spannable = new SpannableString(text);
+        ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{}}, new int[]{Color.BLUE});
+        TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(null, Typeface.BOLD, -1, colorStateList, null);
+        spannable.setSpan(textAppearanceSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
     }
 
     @Override
