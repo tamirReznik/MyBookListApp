@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3BA1AFBA"
+        android:padding="12dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/book_IMG_profile"
+            android:layout_width="52dp"
+            android:layout_height="80dp"
+            android:background="#FFF000"
+            android:src="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/book_LBL_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/book_IMG_profile"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/book_IMG_profile"
+            android:text="@string/book_title"
+            android:textColor="#92000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/book_LBL_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/book_LBL_name"
+            android:layout_alignStart="@id/book_LBL_name"
+            android:text="@string/book_author"
+            android:textSize="14sp" />
+
+
+        <RatingBar
+            android:id="@+id/book_RTB_rank"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/book_LBL_author"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/book_IMG_profile"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/gold"
+            android:rating="4.3" />
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
